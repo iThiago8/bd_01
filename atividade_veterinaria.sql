@@ -6,6 +6,8 @@
 
 -- Capítulo 2 do livro no git - ler sobre normalização de banco de dados, 1°-5° forma
 
+DROP DATABASE VETERINARIA;
+
 CREATE DATABASE VETERINARIA;
 
 USE VETERINARIA;
@@ -36,7 +38,7 @@ CREATE TABLE animal (
 	CONSTRAINT FK_ID_TIPO_ANIMAL FOREIGN KEY (id_tipo_animal) REFERENCES tipo_animal(id)	
 );
 
-CREATE TABLE vacinacoes (
+CREATE TABLE vacinacao (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	desc_nome_vacina VARCHAR(250),
 	data_aplicacao DATE,
@@ -45,17 +47,41 @@ CREATE TABLE vacinacoes (
 );
 
 CREATE INDEX IDX_VACINACAO_DATA_HORA
-ON vacinacoes (data_aplicacao);
+ON vacinacao (data_aplicacao);
 
 INSERT INTO VETERINARIA.animal (desc_nome_animal, id_tipo_animal, data_nascimento, desc_cor, peso, altura)
 VALUES 
+	('Fumacinha', 2, '2022-04-20', 'Cinza', 4.05, 0.34),
 	('Bethoven', 1, '2012-05-15', 'Branco', 5.32, 0.98),
 	('Pé de pano', 5, '2022-05-15', 'Marrom', 75.32, 1.98);
 
 
-INSERT INTO VETERINARIA.vacinacoes (desc_nome_vacina, data_aplicacao, id_animal)
-VALUES 
-	('rubéola', '2025-03-11', 2),
-	('rubéola', '2025-03-11', 3);
-	
+INSERT INTO VETERINARIA.vacinacao (desc_nome_vacina, data_aplicacao, id_animal)
+VALUES
+	('rubéola', '2025-03-11', 3),
+	('FIV/FELV', '2025-03-11', 3);
+
+
+UPDATE VETERINARIA.animal
+SET desc_nome_animal = 'gato'
+WHERE id = 1;
+
+UPDATE VETERINARIA.animal
+SET desc_nome_animal = 'cachorro'
+WHERE id = 2;
+
+UPDATE VETERINARIA.animal
+SET desc_nome_animal = 'cavalo'
+WHERE id = 3;
+
+
+DELETE FROM VETERINARIA.vacinacao
+WHERE id_animal = 3;
+
+
+
+
+
+
+
 
