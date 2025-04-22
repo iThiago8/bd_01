@@ -8,7 +8,8 @@ select * from evento.minicurso;
 
 
 -- minicurso por simposio
-select
+SELECT
+	s.id,
 	s.nome,
 	m.NOME
 from 
@@ -23,6 +24,7 @@ inner join
 -- organizadores por simposio
 
 select 
+	s.id,
 	s.NOME,
 	s.LOCALIZACAO,
 	p.NOME,
@@ -83,7 +85,8 @@ inner join
 
 
 -- pessoa inscrita por minicurso e de qual simposio é
-select
+SELECT
+	s.id id_simposio,
 	s.NOME nome_simposio,
 	s.LOCALIZACAO localizacao_simposio,
 	m.NOME nome_minicurso,
