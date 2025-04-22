@@ -1,3 +1,5 @@
+ drop database if exists EVENTO;
+
 CREATE DATABASE EVENTO;
 
 USE EVENTO;
