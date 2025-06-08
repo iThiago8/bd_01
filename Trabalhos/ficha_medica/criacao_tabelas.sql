@@ -1,0 +1,55 @@
+DROP DATABASE IF EXISTS ficha_medica;
+
+CREATE DATABASE IF NOT EXISTS ficha_medica;
+
+USE ficha_medica;
+
+CREATE TABLE medico (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(255) NULL,
+	sexo VARCHAR(9) NULL,
+	atende_convenio INT(1) NULL
+);
+
+CREATE TABLE convenio (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(255) NULL
+);
+
+CREATE TABLE medico_convenio (
+	id_medico INT NOT NULL,
+	id_convenio INT NOT NULL,
+	PRIMARY KEY (id_medico, id_convenio),
+	CONSTRAINT FK_MEDICO_CONVENIO_MEDICO FOREIGN KEY (id_medico) REFERENCES medico(id),
+	CONSTRAINT FK_MEDICO_CONVENIO_CONVENIO FOREIGN KEY (id_convenio) REFERENCES convenio(id)
+);
+
+CREATE TABLE paciente (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(255) NULL,
+	data_nasc DATE NULL,
+	rg VARCHAR(20) NULL,
+	telefone VARCHAR(14) NULL,
+	sexo VARCHAR(9) NULL,
+	estado_civil VARCHAR(10) NULL,
+	endereco VARCHAR(255) NULL,
+	convenio VARCHAR(255) NULL
+);
+
+CREATE TABLE consulta (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	data_consulta DATE NULL,
+	id_paciente INT NOT NULL,
+	id_medico INT NOT NULL,
+	diagnostico VARCHAR(255) NULL,
+	CONSTRAINT FK_CONSULTA_PACIENTE FOREIGN KEY (id_paciente) REFERENCES paciente(id),
+	CONSTRAINT FK_CONSULTA_MEDICO FOREIGN KEY (id_medico) REFERENCES medico(id)
+);
+
+CREATE TABLE exame (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	exame VARCHAR(255) NULL,
+	data_exame DATE NULL,
+	id_consulta INT NOT NULL,
+	CONSTRAINT FK_EXAME_CONSULTA FOREIGN KEY (id_consulta) REFERENCES consulta(id)
+);
