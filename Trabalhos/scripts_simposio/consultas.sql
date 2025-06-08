@@ -9,7 +9,8 @@ select * from evento.minicurso;
 
 -- minicurso por simposio
 select
-	s.nome,
+	s.ID,
+	s.NOME,
 	m.NOME
 from 
 	evento.simposio s 
@@ -21,8 +22,8 @@ inner join
 		on ms.ID_MINICURSO = m.id;
 
 -- organizadores por simposio
-
 select 
+	s.ID,
 	s.NOME,
 	s.LOCALIZACAO,
 	p.NOME,
@@ -52,7 +53,8 @@ inner join
 		on cc.ID = pcc.id_comissao
 inner join
 	evento.pessoa p
-		on pcc.ID_PESSOA = p.ID;
+		on pcc.ID_PESSOA = p.ID
+where ID_COMISSAO = 3;
 	
 	
 
@@ -60,26 +62,34 @@ inner join
 select * from evento.artigo a;
 
 -- avaliações dos artigos
-
 select
 	a.NOME as NOME_ARTIGO,
 	a.DATA_PUBLICACAO,
 	a.RESUMO,
-	t.NOME,
+	p.NOME as AUTOR,
+	t.NOME as TEMA,
 	cc.NOME_COMISSAO,
 	aac.NOTA,
 	aac.DATA_AVALIACAO
 from 
 	evento.artigo a 
+inner join 
+	evento.pessoa_artigo pa 
+		on a.ID = pa.ID_ARTIGO
+inner join 
+	evento.pessoa p 
+		on p.ID = pa.ID_PESSOA
 inner join
 	evento.tema t 
 		on a.ID_TEMA = t.ID
-inner join
+left join
 	evento.avaliacao_artigo_comissao aac
 		on a.ID = aac.ID_ARTIGO
-inner join
+left join
 	evento.comissao_cientifica cc 
-		on aac.ID_COMISSAO = cc.ID;
+		on aac.ID_COMISSAO = cc.ID
+where t.id = 11
+and p.id = 26;
 
 
 -- pessoa inscrita por minicurso e de qual simposio é
@@ -113,3 +123,8 @@ inner join
 	evento.pessoa prof
 		on (pm.ID_PESSOA = p.id and pm.E_PROFESSOR = true)
 order by nome_simposio asc, nome_minicurso ASC;
+
+
+
+
+

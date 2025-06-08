@@ -1,4 +1,4 @@
- drop database if exists EVENTO;
+drop database if exists EVENTO;
 
 CREATE DATABASE EVENTO;
 
